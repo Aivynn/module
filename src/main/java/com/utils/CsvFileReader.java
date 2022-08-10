@@ -46,34 +46,39 @@ public class CsvFileReader {
         return str;
     }
 
-    public static String reader(String line) {
-        HashMap<String, Object> map = new HashMap<>();
-        String str = "";
-        int ind = 0;
-        int el = 0;
-        int i = 0;
-        while (i < line.length()) {
-            if (line.charAt(i) == 59) {
-                str = line.substring(ind, i).trim();
-                ind = i + 1;
-                if (Objects.equals(TAGS.get(el), "type")) {
-                    if (str.equals("Telephone")) {
-                       map.put(TAGS.get(el),ProductType.TELEPHONE);
+    public static void reader(String line) {
+        try {
+            HashMap<String, Object> map = new HashMap<>();
+            String str = "";
+            int ind = 0;
+            int el = 0;
+            int i = 0;
+            while (i < line.length()) {
+                if (line.charAt(i) == 59) {
+                    str = line.substring(ind, i).trim();
+                    if(str.isEmpty()) {
+                        throw new WrongCSVFileReadingException("Can't read this line, try again");
                     }
-                    else {
-                        map.put(TAGS.get(el),ProductType.TELEVISION);
+                    ind = i + 1;
+                    if (Objects.equals(TAGS.get(el), "type")) {
+                        if (str.equals("Telephone")) {
+                            map.put(TAGS.get(el), ProductType.TELEPHONE);
+                        } else {
+                            map.put(TAGS.get(el), ProductType.TELEVISION);
+                        }
+                        el++;
+                        i++;
+                        continue;
                     }
+                    map.put(TAGS.get(el), str);
                     el++;
-                    i++;
-                    continue;
                 }
-                map.put(TAGS.get(el), str);
-                el++;
+                i++;
             }
-            i++;
+            map.put(TAGS.get(el), Double.parseDouble(line.substring(ind)));
+            fileReader.add(map);
+        }catch (WrongCSVFileReadingException e) {
+            System.out.println(e.getMessage());
         }
-        map.put(TAGS.get(el),Double.parseDouble(line.substring(ind)));
-        fileReader.add(map);
-        return str;
     }
 }

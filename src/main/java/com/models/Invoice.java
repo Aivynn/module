@@ -8,7 +8,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public class Invoice implements Comparable<Invoice>{
+public class Invoice implements Comparable<Invoice> {
     private final List<? extends Product> products;
     private final Customer customer;
 
@@ -16,11 +16,11 @@ public class Invoice implements Comparable<Invoice>{
     private Types type;
     private final LocalDateTime time;
 
-    public Invoice(List<? extends Product> products, Customer customer, Types type, Double totalPrice) {
-        this.products = products;
-        this.customer = customer;
-        this.type = type;
-        this.totalPrice = totalPrice;
+    private Invoice(InvoiceBuilder builder) {
+        this.products = builder.products;
+        this.customer = builder.customer;
+        this.type = builder.type;
+        this.totalPrice = builder.price;
         this.time = LocalDateTime.now();
     }
 
@@ -37,5 +37,39 @@ public class Invoice implements Comparable<Invoice>{
     @Override
     public int compareTo(Invoice o) {
         return this.getProducts().size() - o.getProducts().size();
+    }
+
+    public static class InvoiceBuilder {
+
+        private Customer customer;
+        private Double price;
+
+        private Types type;
+        private final List<? extends Product> products;
+
+        public InvoiceBuilder(List<? extends Product> products, Double price) {
+            this.products = products;
+            this.price = price;
+        }
+
+        public InvoiceBuilder customer(Customer customer) {
+            this.customer = customer;
+            return this;
+        }
+
+        public Invoice build(int limit) {
+            Invoice invoice = new Invoice(this);
+            validate(limit);
+            return invoice;
+
+        }
+
+        private void validate(int limit) {
+            if (limit < price) {
+                type = Types.WHOLESALE;
+            } else {
+                type = Types.RETAIL;
+            }
+        }
     }
 }

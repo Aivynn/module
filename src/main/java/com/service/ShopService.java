@@ -41,7 +41,9 @@ public class ShopService<T extends Product> {
             i++;
         }
         double averagePrice = products.stream().map(Product::getPrice).reduce(Double::sum).get();
-        Invoice invoice = new Invoice(products, CustomerService.createCustomer(), Types.WHOLESALE, averagePrice);
+        Invoice invoice = new Invoice.InvoiceBuilder(products,averagePrice)
+                .customer(CustomerService.createCustomer())
+                .build(500);
         repository.save(invoice);
     }
 

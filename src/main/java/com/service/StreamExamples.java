@@ -11,7 +11,6 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 
 public class StreamExamples {
@@ -86,9 +85,9 @@ public class StreamExamples {
         List<Invoice> sortedOrders = SHOP_SERVICE.getAll().stream().sorted(new Comparator<Invoice>() {
             @Override
             public int compare(Invoice o1, Invoice o2) {
-                int ageCompare = o1.getCustomer().compareTo(o2.getCustomer());
-                int orderCompare = o1.compareTo(o2);
-                int orderPriceCompare = o1.getTotalPrice().compareTo(o2.getTotalPrice());
+                int ageCompare = o2.getCustomer().compareTo(o1.getCustomer());
+                int orderCompare = o2.compareTo(o1);
+                int orderPriceCompare = o2.getTotalPrice().compareTo(o1.getTotalPrice());
 
                 if (ageCompare == 0) {
                     return orderCompare == 0 ? orderPriceCompare : orderCompare;

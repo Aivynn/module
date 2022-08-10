@@ -1,7 +1,6 @@
 package com.repository;
 
 import com.models.Invoice;
-import com.models.Product;
 
 import java.util.LinkedList;
 import java.util.List;
