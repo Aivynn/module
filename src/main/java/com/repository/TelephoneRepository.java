@@ -7,7 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
-public class TelephoneRepository implements CrudRepository<Telephone> {
+public class TelephoneRepository implements ProductRepository<Telephone> {
 
     private final List<Telephone> telephones;
 
@@ -28,32 +28,27 @@ public class TelephoneRepository implements CrudRepository<Telephone> {
     public void save(Telephone telephone) {
         if (Optional.ofNullable(telephone).isPresent()) {
             telephones.add(telephone);
-        }
-        else{
+        } else {
             throw new IllegalArgumentException("The object is null");
         }
     }
 
     @Override
-    public void update(Telephone telephone) {
-
-    }
-
-    @Override
-    public void get(Telephone telephone) {
-
-    }
-
-    @Override
-    public void delete(Telephone telephone) {
-
-    }
-
-    @Override
     public List<Telephone> getAll() {
-        if(telephones.isEmpty()) {
+        if (telephones.isEmpty()) {
             return Collections.emptyList();
         }
         return telephones;
+    }
+
+    @Override
+    public Optional<Telephone> findById(String id) {
+        Telephone result = null;
+        for (Telephone telephone : telephones) {
+            if (telephone.getId().equals(id)) {
+                result = telephone;
+            }
+        }
+        return Optional.ofNullable(result);
     }
 }

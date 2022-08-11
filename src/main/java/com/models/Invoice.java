@@ -17,7 +17,7 @@ public class Invoice implements Comparable<Invoice> {
     private Invoice(InvoiceBuilder builder) {
         this.products = builder.products;
         this.customer = builder.customer;
-        this.type = builder.type;
+        this.type = builder.types;
         this.totalPrice = builder.price;
         this.time = LocalDateTime.now();
     }
@@ -40,9 +40,9 @@ public class Invoice implements Comparable<Invoice> {
     public static class InvoiceBuilder {
 
         private Customer customer;
-        private Double price;
+        private final Double price;
 
-        private Types type;
+        private Types types;
         private final List<? extends Product> products;
 
         public InvoiceBuilder(List<? extends Product> products, Double price) {
@@ -56,20 +56,26 @@ public class Invoice implements Comparable<Invoice> {
         }
 
         public Invoice build(int limit) {
-            Invoice invoice = new Invoice(this);
             validate(limit);
-            return invoice;
+            return new Invoice(this);
 
+        }
+
+        private InvoiceBuilder type(Types types) {
+            this.types = types;
+            return this;
         }
 
         private void validate(int limit) {
             if (limit < price) {
-                type = Types.WHOLESALE;
-            } else if (customer.getAge() < 18){
-                type = Types.LOW_AGE;
+                type(Types.WHOLESALE);
             }
             else {
-                type = Types.RETAIL;
+                type(Types.RETAIL);
+            }
+
+            if (customer.getAge() < 18){
+                type(Types.LOW_AGE);
             }
         }
     }

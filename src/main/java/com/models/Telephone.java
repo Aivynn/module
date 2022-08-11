@@ -1,5 +1,8 @@
 package com.models;
 
+import lombok.Getter;
+
+@Getter
 public class Telephone extends Product {
 
     private final String model;

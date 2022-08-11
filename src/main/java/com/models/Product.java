@@ -2,14 +2,19 @@ package com.models;
 
 import lombok.Getter;
 
+import java.util.UUID;
+
 @Getter
 public abstract class Product {
+
+    private String id;
     private String series;
     private String screenType;
     private double price;
     private final ProductType type;
 
     public Product(String series, String screenType, double price, ProductType type) {
+        id = UUID.randomUUID().toString();
         this.series = series;
         this.screenType = screenType;
         this.price = price;

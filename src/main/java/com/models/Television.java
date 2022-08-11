@@ -1,5 +1,8 @@
 package com.models;
 
+import lombok.Getter;
+
+@Getter
 public class Television extends Product {
 
     private final double diagonal;

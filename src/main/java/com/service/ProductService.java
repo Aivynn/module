@@ -1,14 +1,14 @@
 package com.service;
 
 import com.models.Product;
-import com.repository.CrudRepository;
+import com.repository.ProductRepository;
 
 
 public abstract class ProductService<T extends Product> {
 
-    private CrudRepository<T> repository;
+    private ProductRepository<T> repository;
 
-    public ProductService(CrudRepository<T> repository) {
+    public ProductService(ProductRepository<T> repository) {
         this.repository = repository;
     }
 

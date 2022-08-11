@@ -1,6 +1,5 @@
 package com.repository;
 
-import com.models.Telephone;
 import com.models.Television;
 
 import java.util.Collections;
@@ -8,7 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
-public class TelevisionRepository implements CrudRepository<Television> {
+public class TelevisionRepository implements ProductRepository<Television> {
 
     private final List<Television> televisions;
 
@@ -27,26 +26,13 @@ public class TelevisionRepository implements CrudRepository<Television> {
 
     @Override
     public void save(Television television) {
-        Optional<Television> television1 = Optional.of(television);
-        if (television1.isPresent()) {
+        if (Optional.ofNullable(television).isPresent()) {
             televisions.add(television);
         }
+        else {
+            throw new IllegalArgumentException("The object is null");
+        }
 
-
-    }
-
-    @Override
-    public void update(Television television) {
-
-    }
-
-    @Override
-    public void get(Television television) {
-
-    }
-
-    @Override
-    public void delete(Television television) {
 
     }
 
@@ -56,6 +42,17 @@ public class TelevisionRepository implements CrudRepository<Television> {
             return Collections.emptyList();
         }
         return televisions;
+    }
+
+    @Override
+    public Optional<Television> findById(String id) {
+        Television result = null;
+        for (Television television : televisions) {
+            if (television.getId().equals(id)) {
+                result = television;
+            }
+        }
+        return Optional.ofNullable(result);
     }
 
 }
