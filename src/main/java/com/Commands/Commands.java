@@ -1,5 +1,8 @@
 package com.Commands;
 
+import lombok.Getter;
+
+@Getter
 public enum Commands {
     CREATE("Create new order", new Create()),
     INFO("Get info about orders", new Total()),

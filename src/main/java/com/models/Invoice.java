@@ -1,13 +1,11 @@
 package com.models;
 
 import lombok.Getter;
-import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
-@Setter
 public class Invoice implements Comparable<Invoice> {
     private final List<? extends Product> products;
     private final Customer customer;
@@ -67,7 +65,10 @@ public class Invoice implements Comparable<Invoice> {
         private void validate(int limit) {
             if (limit < price) {
                 type = Types.WHOLESALE;
-            } else {
+            } else if (customer.getAge() < 18){
+                type = Types.LOW_AGE;
+            }
+            else {
                 type = Types.RETAIL;
             }
         }

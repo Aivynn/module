@@ -2,6 +2,8 @@ package com.service;
 
 import com.models.Product;
 import com.models.ProductType;
+import com.models.Telephone;
+import com.models.Television;
 
 
 import java.util.HashMap;

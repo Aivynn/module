@@ -3,7 +3,6 @@ package com.service;
 import com.models.Invoice;
 import com.models.Product;
 import com.models.ProductType;
-import com.models.Types;
 
 
 import java.time.LocalDateTime;
@@ -32,18 +31,12 @@ public class StreamExamples {
                 .count();
 
         System.out.printf("Were bought %d telephones and %d televisions", telephones, televisions);
+        System.out.println();
     }
 
     public static void minOrder() {
         Optional<Invoice> target = SHOP_SERVICE.getAll().stream().min(Comparator.comparingDouble(Invoice::getTotalPrice));
         System.out.println(target.get().getTotalPrice() + " " + target.get().getCustomer());
-    }
-
-    public static void oneProduct() {
-        Optional<Integer> min = SHOP_SERVICE.getAll().stream()
-                .map(Invoice::getProducts)
-                .map(List::size)
-                .min(Integer::compare);
     }
 
     public static void profit() {
@@ -67,7 +60,7 @@ public class StreamExamples {
         SHOP_SERVICE.getAll()
                 .stream()
                 .filter(x -> x.getCustomer().getAge() < 18)
-                .forEach(x -> x.setType(Types.LOW_AGE));
+                .forEach(System.out::println);
     }
 
     public static void lastOrders() {
@@ -75,7 +68,6 @@ public class StreamExamples {
                 .map(Invoice::getTime)
                 .sorted()
                 .toList();
-        System.out.println(time);
         time.stream()
                 .limit(3)
                 .forEach(System.out::println);

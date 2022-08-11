@@ -2,7 +2,7 @@ package com.models;
 
 public class Television extends Product {
 
-    private double diagonal;
+    private final double diagonal;
 
     public Television(String series, String screenType, double price, double diagonal) {
         super(series, screenType, price, ProductType.TELEVISION);

@@ -15,7 +15,7 @@ import java.util.stream.Stream;
 
 public class CsvFileReader {
 
-    static List<String> TAGS = new ArrayList<>();
+    static List<String> HEADERS = new ArrayList<>();
     static List<HashMap<String, Object>> fileReader = new ArrayList<>();
 
     public List<HashMap<String, Object>> parseProduct() throws URISyntaxException, IOException {
@@ -26,7 +26,6 @@ public class CsvFileReader {
         try (Stream<String> br = Files.lines(Path.of(reader.toURI()))) {
             br.skip(1).forEach(CsvFileReader::reader);
         }
-        System.out.println(fileReader);
         return fileReader;
     }
 
@@ -38,11 +37,11 @@ public class CsvFileReader {
             if (line.charAt(i) == 59) {
                 str = line.substring(ind, i).trim();
                 ind = i + 1;
-                TAGS.add(str);
+                HEADERS.add(str);
             }
             i++;
         }
-        TAGS.add(line.substring(ind));
+        HEADERS.add(line.substring(ind));
         return str;
     }
 
@@ -57,25 +56,27 @@ public class CsvFileReader {
                 if (line.charAt(i) == 59) {
                     str = line.substring(ind, i).trim();
                     if(str.isEmpty()) {
-                        throw new WrongCSVFileReadingException("Can't read this line, try again");
+                        throw new WrongCSVFileReadingException("Can't read this line. " +
+                                HEADERS.get(el) + " at this column and at this line " +
+                                fileReader.size() + " element is wrong, line won't be converted.");
                     }
                     ind = i + 1;
-                    if (Objects.equals(TAGS.get(el), "type")) {
+                    if (Objects.equals(HEADERS.get(el), "type")) {
                         if (str.equals("Telephone")) {
-                            map.put(TAGS.get(el), ProductType.TELEPHONE);
+                            map.put(HEADERS.get(el), ProductType.TELEPHONE);
                         } else {
-                            map.put(TAGS.get(el), ProductType.TELEVISION);
+                            map.put(HEADERS.get(el), ProductType.TELEVISION);
                         }
                         el++;
                         i++;
                         continue;
                     }
-                    map.put(TAGS.get(el), str);
+                    map.put(HEADERS.get(el), str);
                     el++;
                 }
                 i++;
             }
-            map.put(TAGS.get(el), Double.parseDouble(line.substring(ind)));
+            map.put(HEADERS.get(el), Double.parseDouble(line.substring(ind)));
             fileReader.add(map);
         }catch (WrongCSVFileReadingException e) {
             System.out.println(e.getMessage());

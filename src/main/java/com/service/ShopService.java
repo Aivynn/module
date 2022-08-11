@@ -2,7 +2,6 @@ package com.service;
 
 import com.models.*;
 import com.repository.ShopRepository;
-import com.repository.TelephoneRepository;
 import com.utils.CsvFileReader;
 import lombok.Getter;
 

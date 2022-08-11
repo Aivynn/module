@@ -26,9 +26,9 @@ public class TelephoneService extends ProductService<Telephone> {
     public Telephone createAndSaveProducts(HashMap<String, Object> map) {
         return new Telephone(
                 (String) map.get("series"),
-                (String) map.get("model"),
+                (String) map.get("screenType"),
                 (Double) map.get("price"),
-                (String) map.get("screentype"));
+                (String) map.get("model"));
     }
 
 }

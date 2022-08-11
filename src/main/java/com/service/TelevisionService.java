@@ -26,7 +26,7 @@ public class TelevisionService extends ProductService<Television> {
     public Television createAndSaveProducts(HashMap<String, Object> map) {
         return new Television(
                 (String) map.get("series"),
-                (String) map.get("model"),
+                (String) map.get("screenType"),
                 (Double) map.get("price"),
                 Double.parseDouble((String) map.get("diagonal")));
     }
