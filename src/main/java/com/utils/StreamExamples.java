@@ -75,20 +75,17 @@ public class StreamExamples {
     }
 
     public static void sortedInvoices() {
-        List<Invoice> sortedOrders = SHOP_SERVICE.getAll().stream().sorted(new Comparator<Invoice>() {
-            @Override
-            public int compare(Invoice o1, Invoice o2) {
-                int ageCompare = o2.getCustomer().compareTo(o1.getCustomer());
-                int orderCompare = o2.compareTo(o1);
-                int orderPriceCompare = o2.getTotalPrice().compareTo(o1.getTotalPrice());
+        List<Invoice> sortedOrders = SHOP_SERVICE.getAll().stream().sorted((o1, o2) -> {
+            int ageCompare = o2.getCustomer().compareTo(o1.getCustomer());
+            int orderCompare = o2.compareTo(o1);
+            int orderPriceCompare = o2.getTotalPrice().compareTo(o1.getTotalPrice());
 
-                if (ageCompare == 0) {
-                    return orderCompare == 0 ? orderPriceCompare : orderCompare;
-                } else {
-                    return ageCompare;
-                }
-
+            if (ageCompare == 0) {
+                return orderCompare == 0 ? orderPriceCompare : orderCompare;
+            } else {
+                return ageCompare;
             }
+
         }).toList();
         sortedOrders.forEach(System.out::println);
     }
