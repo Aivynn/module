@@ -13,6 +13,7 @@ import java.util.stream.Stream;
 
 public class CsvFileReader {
 
+    public static int poistion = 0;
     public static final String HEADER_TYPE = "type";
     public static final String HEADER_SERIES = "series";
     public static final String HEADER_SCREEN_TYPE = "screen type";
@@ -50,13 +51,14 @@ public class CsvFileReader {
             int el = 0;
             for(String str : words) {
                 if(str.isEmpty()) {
-                    throw new WrongCSVFileReadingException("Can't read this line. " +
-                            headers.get(el) + " at this column and at this line " +
-                            map.size() + " element is wrong, line won't be converted.");
+                    throw new WrongCSVFileReadingException("Can't read this line. " + headers.get(el) +
+                            " at this column and at this line " + poistion +
+                            " element is wrong, line won't be converted.");
                 }
                 map.put(headers.get(el),str);
                 el++;
             }
+            poistion++;
         }catch (WrongCSVFileReadingException e) {
             System.out.println(e.getMessage());
             return null;
