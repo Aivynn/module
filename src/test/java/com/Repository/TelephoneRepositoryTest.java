@@ -42,15 +42,6 @@ public class TelephoneRepositoryTest {
     }
 
     @Test
-    void findById() {
-        target.save(phone);
-        final Optional<Telephone> optionalPhone = target.findById(phone.getId());
-        Assertions.assertTrue(optionalPhone.isPresent());
-        final Telephone actualPhone = optionalPhone.get();
-        Assertions.assertEquals(phone.getId(), actualPhone.getId());
-    }
-
-    @Test
     void getAll() {
         target.save(phone);
         final List<Telephone> actualResult = target.getAll();

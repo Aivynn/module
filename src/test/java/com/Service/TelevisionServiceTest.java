@@ -20,7 +20,7 @@ public class TelevisionServiceTest {
 
     private TelevisionRepository repository;
 
-    private Television television = new Television("AAABBB","QLED",1500.45,35.50);
+    private Television television = new Television("AAABBB","QLED",1500.45,35.50,"China");
 
     @BeforeEach
     void setUp() {

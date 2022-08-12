@@ -28,7 +28,8 @@ public class ShopRepositoryTest {
                        "RT-15",
                        "LED",
                        4634.35,
-                       50.35)),
+                       50.35,
+                       "China")),
                        2500.34)
                 .customer(new Customer("vasek2281337@gmail.com",44))
                 .build(500);

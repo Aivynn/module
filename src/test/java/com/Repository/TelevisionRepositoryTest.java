@@ -22,7 +22,8 @@ public class TelevisionRepositoryTest {
                 "RT-15",
                 "LED",
                 4634.35,
-                50.35
+                50.35,
+                "China"
         );
     }
 
@@ -39,15 +40,6 @@ public class TelevisionRepositoryTest {
         Assertions.assertThrows(IllegalArgumentException.class, () -> target.save(null));
         final List<Television> actualResult = target.getAll();
         Assertions.assertEquals(0, actualResult.size());
-    }
-
-    @Test
-    void findById() {
-        target.save(television);
-        final Optional<Television> optionalPhone = target.findById(television.getId());
-        Assertions.assertTrue(optionalPhone.isPresent());
-        final Television actualPhone = optionalPhone.get();
-        Assertions.assertEquals(television.getId(), actualPhone.getId());
     }
 
     @Test
