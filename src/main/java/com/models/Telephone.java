@@ -15,6 +15,10 @@ public class Telephone extends Product {
     @Override
     public String toString() {
         return "Telephone{" +
+                "series='" + series + '\'' +
+                ", screenType='" + screenType + '\'' +
+                ", price=" + price +
+                ", type=" + type +
                 "model='" + model + '\'' +
                 '}';
     }

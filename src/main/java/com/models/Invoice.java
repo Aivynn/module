@@ -25,7 +25,9 @@ public class Invoice implements Comparable<Invoice> {
     @Override
     public String toString() {
         return "Invoice{" +
-                "products=" + products +
+                "customer=" + customer +
+                ",products=" + products +
+                ",price=" + totalPrice +
                 ", customer=" + customer +
                 ", type=" + type +
                 ", time=" + time +

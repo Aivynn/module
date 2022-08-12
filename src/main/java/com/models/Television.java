@@ -15,6 +15,10 @@ public class Television extends Product {
     @Override
     public String toString() {
         return "Television{" +
+                "series='" + series + '\'' +
+                ", screenType='" + screenType + '\'' +
+                ", price=" + price +
+                ", type=" + type +
                 "diagonal=" + diagonal +
                 '}';
     }

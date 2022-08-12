@@ -3,7 +3,9 @@ package com.service;
 import com.models.Telephone;
 import com.repository.TelephoneRepository;
 
-import java.util.HashMap;
+import java.util.Map;
+
+import static com.utils.CsvFileReader.*;
 
 public class TelephoneService extends ProductService<Telephone> {
 
@@ -23,12 +25,14 @@ public class TelephoneService extends ProductService<Telephone> {
         this.repository = repository;
     }
 
-    public Telephone createAndSaveProducts(HashMap<String, Object> map) {
-        return new Telephone(
-                (String) map.get("series"),
-                (String) map.get("screenType"),
-                (Double) map.get("price"),
-                (String) map.get("model"));
+    public Telephone createAndSaveProducts(Map<String, String> map) {
+        Telephone phone = new Telephone(
+                map.get(HEADER_SERIES),
+                map.get(HEADER_SCREEN_TYPE),
+                Double.parseDouble(map.get(HEADER_PRICE)),
+                map.get(HEADER_MODEL));
+        repository.save(phone);
+        return phone;
     }
 
 }

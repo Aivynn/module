@@ -1,8 +1,9 @@
-package com.service;
+package com.utils;
 
 import com.models.Invoice;
 import com.models.Product;
 import com.models.ProductType;
+import com.service.ShopService;
 
 
 import java.time.LocalDateTime;
@@ -36,7 +37,7 @@ public class StreamExamples {
 
     public static void minOrder() {
         Optional<Invoice> target = SHOP_SERVICE.getAll().stream().min(Comparator.comparingDouble(Invoice::getTotalPrice));
-        System.out.println(target.get().getTotalPrice() + " " + target.get().getCustomer());
+        System.out.println(target.get().getProducts() + " " + target.get().getTotalPrice() + " " + target.get().getCustomer());
     }
 
     public static void profit() {

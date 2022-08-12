@@ -1,8 +1,7 @@
 package com.Commands;
 
 import com.models.ProductType;
-import com.models.Types;
-import com.service.StreamExamples;
+import com.utils.StreamExamples;
 import com.utils.TypesReader;
 
 import java.io.IOException;

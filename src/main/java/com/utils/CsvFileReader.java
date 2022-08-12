@@ -1,85 +1,66 @@
 package com.utils;
 
-import com.models.ProductType;
+import com.models.Product;
+import com.service.ProductFactory;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Stream;
 
 public class CsvFileReader {
 
-    static List<String> HEADERS = new ArrayList<>();
-    static List<HashMap<String, Object>> fileReader = new ArrayList<>();
+    public static final String HEADER_TYPE = "type";
+    public static final String HEADER_SERIES = "series";
+    public static final String HEADER_SCREEN_TYPE = "screen type";
+    public static final String HEADER_PRICE = "price";
+    public static final String HEADER_DIAGONAL = "diagonal";
+    public static final String HEADER_MODEL = "model";
 
-    public List<HashMap<String, Object>> parseProduct() throws URISyntaxException, IOException {
+
+
+    public List<? extends Product> parseProduct() throws URISyntaxException, IOException, WrongCSVFileReadingException {
+        List<? extends Product> products = new LinkedList<>();
+        List<String> headers;
         URL reader = this.getClass().getClassLoader().getResource("file.csv");
-        try (Stream<String> br = Files.lines(Path.of(reader.toURI()))) {
-            br.limit(1).forEach(CsvFileReader::read);
+        try(Stream<String> br = Files.lines(Path.of(reader.toURI()))) {
+            headers = br.findFirst().map(CsvFileReader::readHeader).orElseThrow(() -> new WrongCSVFileReadingException("Missing header"));
         }
+
         try (Stream<String> br = Files.lines(Path.of(reader.toURI()))) {
-            br.skip(1).forEach(CsvFileReader::reader);
+            br.skip(1).map(x -> reader(x,headers))
+                    .filter(Objects::nonNull)
+                    .forEach(map -> products.add(ProductFactory.createAndSave(map)));
         }
-        return fileReader;
+        return products;
     }
 
-    public static String read(String line) {
-        String str = "";
-        int ind = 0;
-        int i = 0;
-        while (i < line.length()) {
-            if (line.charAt(i) == 59) {
-                str = line.substring(ind, i).trim();
-                ind = i + 1;
-                HEADERS.add(str);
-            }
-            i++;
-        }
-        HEADERS.add(line.substring(ind));
-        return str;
+    private static List<String> readHeader(String line) {
+        return List.of(line.split(","));
+
     }
 
-    public static void reader(String line) {
+    private static Map<String, String> reader(String line,List<String> headers) {
+       Map<String, String> map = new HashMap<>();
         try {
-            HashMap<String, Object> map = new HashMap<>();
-            String str = "";
-            int ind = 0;
+            String[] words = line.split(",");
             int el = 0;
-            int i = 0;
-            while (i < line.length()) {
-                if (line.charAt(i) == 59) {
-                    str = line.substring(ind, i).trim();
-                    if(str.isEmpty()) {
-                        throw new WrongCSVFileReadingException("Can't read this line. " +
-                                HEADERS.get(el) + " at this column and at this line " +
-                                fileReader.size() + " element is wrong, line won't be converted.");
-                    }
-                    ind = i + 1;
-                    if (Objects.equals(HEADERS.get(el), "type")) {
-                        if (str.equals("Telephone")) {
-                            map.put(HEADERS.get(el), ProductType.TELEPHONE);
-                        } else {
-                            map.put(HEADERS.get(el), ProductType.TELEVISION);
-                        }
-                        el++;
-                        i++;
-                        continue;
-                    }
-                    map.put(HEADERS.get(el), str);
-                    el++;
+            for(String str : words) {
+                if(str.isEmpty()) {
+                    throw new WrongCSVFileReadingException("Can't read this line. " +
+                            headers.get(el) + " at this column and at this line " +
+                            map.size() + " element is wrong, line won't be converted.");
                 }
-                i++;
+                map.put(headers.get(el),str);
+                el++;
             }
-            map.put(HEADERS.get(el), Double.parseDouble(line.substring(ind)));
-            fileReader.add(map);
         }catch (WrongCSVFileReadingException e) {
             System.out.println(e.getMessage());
+            return null;
         }
+        return map;
     }
 }

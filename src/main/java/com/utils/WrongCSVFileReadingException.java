@@ -1,6 +1,6 @@
 package com.utils;
 
-public class WrongCSVFileReadingException extends Exception {
+public class WrongCSVFileReadingException extends RuntimeException {
 
     public WrongCSVFileReadingException() {
     }

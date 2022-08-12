@@ -6,7 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
-public class ShopRepository implements IShop<Invoice>{
+public class ShopRepository implements IShop<Invoice> {
 
     private final List<Invoice> products;
 
@@ -27,8 +27,7 @@ public class ShopRepository implements IShop<Invoice>{
     public void save(Invoice product) {
         if (Optional.ofNullable(product).isPresent()) {
             products.add(product);
-        }
-        else{
+        } else {
             throw new IllegalArgumentException("The object is null");
         }
 
@@ -41,7 +40,7 @@ public class ShopRepository implements IShop<Invoice>{
 
     @Override
     public void printAll() {
-        for(Invoice p : products) {
+        for (Invoice p : products) {
             System.out.println(p);
         }
     }

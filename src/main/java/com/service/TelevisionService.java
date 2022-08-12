@@ -1,14 +1,16 @@
 package com.service;
 
-import com.models.Telephone;
 import com.models.Television;
 import com.repository.TelevisionRepository;
 
 import java.util.HashMap;
+import java.util.Map;
+
+import static com.utils.CsvFileReader.*;
 
 public class TelevisionService extends ProductService<Television> {
 
-    private TelevisionRepository repository;
+    private final TelevisionRepository repository;
 
     private static TelevisionService instance;
 
@@ -23,11 +25,13 @@ public class TelevisionService extends ProductService<Television> {
         this.repository = repository;
     }
 
-    public Television createAndSaveProducts(HashMap<String, Object> map) {
-        return new Television(
-                (String) map.get("series"),
-                (String) map.get("screenType"),
-                (Double) map.get("price"),
-                Double.parseDouble((String) map.get("diagonal")));
+    public Television createAndSaveProducts(Map<String, String> map) {
+        Television television = new Television(
+                map.get(HEADER_SERIES),
+                map.get(HEADER_SCREEN_TYPE),
+                Double.parseDouble(map.get(HEADER_PRICE)),
+                Double.parseDouble(map.get(HEADER_DIAGONAL)));
+        repository.save(television);
+        return television;
     }
 }

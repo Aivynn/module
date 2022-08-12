@@ -7,11 +7,11 @@ import java.util.UUID;
 @Getter
 public abstract class Product {
 
-    private String id;
-    private String series;
-    private String screenType;
-    private double price;
-    private final ProductType type;
+    protected String id;
+    protected String series;
+    protected String screenType;
+    protected double price;
+    protected final ProductType type;
 
     public Product(String series, String screenType, double price, ProductType type) {
         id = UUID.randomUUID().toString();
