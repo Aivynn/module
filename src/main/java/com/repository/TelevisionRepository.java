@@ -28,8 +28,7 @@ public class TelevisionRepository implements ProductRepository<Television> {
     public void save(Television television) {
         if (Optional.ofNullable(television).isPresent()) {
             televisions.add(television);
-        }
-        else {
+        } else {
             throw new IllegalArgumentException("The object is null");
         }
 
@@ -42,17 +41,6 @@ public class TelevisionRepository implements ProductRepository<Television> {
             return Collections.emptyList();
         }
         return televisions;
-    }
-
-    @Override
-    public Optional<Television> findById(String id) {
-        Television result = null;
-        for (Television television : televisions) {
-            if (television.getId().equals(id)) {
-                result = television;
-            }
-        }
-        return Optional.ofNullable(result);
     }
 
 }

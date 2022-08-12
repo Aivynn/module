@@ -40,15 +40,4 @@ public class TelephoneRepository implements ProductRepository<Telephone> {
         }
         return telephones;
     }
-
-    @Override
-    public Optional<Telephone> findById(String id) {
-        Telephone result = null;
-        for (Telephone telephone : telephones) {
-            if (telephone.getId().equals(id)) {
-                result = telephone;
-            }
-        }
-        return Optional.ofNullable(result);
-    }
 }

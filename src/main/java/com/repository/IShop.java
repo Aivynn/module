@@ -7,6 +7,4 @@ public interface IShop<Invoice>{
     void save(Invoice product);
 
     List<Invoice> getAll();
-
-    void printAll();
 }

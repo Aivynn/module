@@ -13,6 +13,7 @@ import java.util.stream.Stream;
 
 public class CsvFileReader {
 
+
     public static int poistion = 0;
     public static final String HEADER_TYPE = "type";
     public static final String HEADER_SERIES = "series";
@@ -20,6 +21,8 @@ public class CsvFileReader {
     public static final String HEADER_PRICE = "price";
     public static final String HEADER_DIAGONAL = "diagonal";
     public static final String HEADER_MODEL = "model";
+
+    public static final String HEADER_COUNTRY = "country";
 
 
 

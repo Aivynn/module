@@ -7,9 +7,12 @@ public class Television extends Product {
 
     private final double diagonal;
 
-    public Television(String series, String screenType, double price, double diagonal) {
+    private final String country;
+
+    public Television(String series, String screenType, double price, double diagonal, String country) {
         super(series, screenType, price, ProductType.TELEVISION);
         this.diagonal = diagonal;
+        this.country = country;
     }
 
     @Override
@@ -19,7 +22,8 @@ public class Television extends Product {
                 ", screenType='" + screenType + '\'' +
                 ", price=" + price +
                 ", type=" + type +
-                "diagonal=" + diagonal +
+                ", country=" + country +
+                ", diagonal=" + diagonal +
                 '}';
     }
 }

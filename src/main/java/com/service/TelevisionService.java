@@ -30,7 +30,8 @@ public class TelevisionService extends ProductService<Television> {
                 map.get(HEADER_SERIES),
                 map.get(HEADER_SCREEN_TYPE),
                 Double.parseDouble(map.get(HEADER_PRICE)),
-                Double.parseDouble(map.get(HEADER_DIAGONAL)));
+                Double.parseDouble(map.get(HEADER_DIAGONAL)),
+                map.get(HEADER_COUNTRY));
         repository.save(television);
         return television;
     }

@@ -37,11 +37,5 @@ public class ShopRepository implements IShop<Invoice> {
     public List<Invoice> getAll() {
         return products;
     }
-
-    @Override
-    public void printAll() {
-        for (Invoice p : products) {
-            System.out.println(p);
-        }
-    }
 }
+
