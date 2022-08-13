@@ -11,6 +11,7 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 public class StreamExamples {
@@ -58,10 +59,15 @@ public class StreamExamples {
     }
 
     public static void lowAge() {
-        SHOP_SERVICE.getAll()
-                .stream()
-                .filter(x -> x.getCustomer().getAge() < 18)
-                .forEach(System.out::println);
+       List<Invoice> invoices = SHOP_SERVICE.getAll()
+               .stream()
+               .filter(x -> x.getCustomer().getAge() < 18).toList();
+       if(!invoices.isEmpty()) {
+           System.out.println(invoices);
+       }
+       else {
+           System.out.println("No such customers");
+       }
     }
 
     public static void lastOrders() {

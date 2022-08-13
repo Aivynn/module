@@ -1,6 +1,7 @@
 package com.models;
 
 import lombok.Getter;
+import lombok.NonNull;
 
 import java.util.UUID;
 
@@ -11,6 +12,7 @@ public abstract class Product {
     protected String series;
     protected String screenType;
     protected double price;
+
     protected final ProductType type;
 
     public Product(String series, String screenType, double price, ProductType type) {

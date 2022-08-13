@@ -24,18 +24,19 @@ public class CsvFileReader {
 
     public static final String HEADER_COUNTRY = "country";
 
+    public static List<String> HEADERS = new LinkedList<>();
+
 
 
     public List<? extends Product> parseProduct() throws URISyntaxException, IOException, WrongCSVFileReadingException {
         List<? extends Product> products = new LinkedList<>();
-        List<String> headers;
         URL reader = this.getClass().getClassLoader().getResource("file.csv");
         try(Stream<String> br = Files.lines(Path.of(reader.toURI()))) {
-            headers = br.findFirst().map(CsvFileReader::readHeader).orElseThrow(() -> new WrongCSVFileReadingException("Missing header"));
+            HEADERS = br.findFirst().map(CsvFileReader::readHeader).orElseThrow(() -> new WrongCSVFileReadingException("Missing header"));
         }
 
         try (Stream<String> br = Files.lines(Path.of(reader.toURI()))) {
-            br.skip(1).map(x -> reader(x,headers))
+            br.skip(1).map(x -> reader(x,HEADERS))
                     .filter(Objects::nonNull)
                     .forEach(map -> products.add(ProductFactory.createAndSave(map)));
         }

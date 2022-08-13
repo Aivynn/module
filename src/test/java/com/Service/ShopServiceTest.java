@@ -64,5 +64,5 @@ public class ShopServiceTest {
         Assertions.assertThrows(IllegalStateException.class, () -> target.createNewOrder(3, -5));
 
     }
-
+    
 }

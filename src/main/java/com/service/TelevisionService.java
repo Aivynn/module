@@ -5,6 +5,7 @@ import com.repository.TelevisionRepository;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import static com.utils.CsvFileReader.*;
 
@@ -20,6 +21,7 @@ public class TelevisionService extends ProductService<Television> {
         }
         return instance;
     }
+
     public TelevisionService(TelevisionRepository repository) {
         super(repository);
         this.repository = repository;
@@ -27,11 +29,11 @@ public class TelevisionService extends ProductService<Television> {
 
     public Television createAndSaveProducts(Map<String, String> map) {
         Television television = new Television(
-                map.get(HEADER_SERIES),
-                map.get(HEADER_SCREEN_TYPE),
-                Double.parseDouble(map.get(HEADER_PRICE)),
-                Double.parseDouble(map.get(HEADER_DIAGONAL)),
-                map.get(HEADER_COUNTRY));
+                Optional.of(map.get(HEADER_SERIES)).get(),
+                Optional.of(map.get(HEADER_SCREEN_TYPE)).get(),
+                Optional.of(Double.parseDouble(map.get(HEADER_PRICE))).get(),
+                Optional.of(Double.parseDouble(map.get(HEADER_DIAGONAL))).get(),
+                Optional.of(map.get(HEADER_COUNTRY)).get());
         repository.save(television);
         return television;
     }

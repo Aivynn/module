@@ -2,8 +2,12 @@ package com.service;
 
 import com.models.Telephone;
 import com.repository.TelephoneRepository;
+import com.utils.WrongCSVFileReadingException;
 
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 
 import static com.utils.CsvFileReader.*;
 
@@ -27,10 +31,10 @@ public class TelephoneService extends ProductService<Telephone> {
 
     public Telephone createAndSaveProducts(Map<String, String> map) {
         Telephone phone = new Telephone(
-                map.get(HEADER_SERIES),
-                map.get(HEADER_SCREEN_TYPE),
-                Double.parseDouble(map.get(HEADER_PRICE)),
-                map.get(HEADER_MODEL));
+                Optional.of(map.get(HEADER_SERIES)).get(),
+                Optional.of(map.get(HEADER_SCREEN_TYPE)).get(),
+                Optional.of(Double.parseDouble(map.get(HEADER_PRICE))).get(),
+                Optional.of(map.get(HEADER_MODEL)).get());
         repository.save(phone);
         return phone;
     }
