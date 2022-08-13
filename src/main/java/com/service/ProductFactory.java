@@ -1,13 +1,9 @@
 package com.service;
 
 import com.models.Product;
-import com.models.ProductType;
-import com.models.Telephone;
-import com.models.Television;
 import com.utils.WrongCSVFileReadingException;
 
 
-import java.util.HashMap;
 import java.util.Map;
 
 import static com.utils.CsvFileReader.HEADER_TYPE;
